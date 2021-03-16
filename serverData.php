@@ -125,29 +125,29 @@ function serverData(){ //Zugriff auf die Datenbank
 		
 		function createTestData($con){ //Estellt einige Testdaten
 			
-				$usernames[0]="alle";
-				$usernames[1]="Hans";
+				$usernames[0]="alleMeineEntchen@UrlaubAmSued.see";
+				$usernames[1]="SuperHans@mailserver.net";
 				$usernames[2]="Heinz@Ketchup.schmeckt";
-				$usernames[3]="Carlos";
-				$usernames[4]="Dieter";
-				$usernames[5]="Maximator";
-				$usernames[6]="Horst";
-				$usernames[7]="Rüdiger";
-				$usernames[8]="Jürgen";
-				$usernames[9]="Sebastian";
-				$usernames[10]="Kevin";
-				$usernames[11]="Sabrina";
-				$usernames[12]="Alexandra";
-				$usernames[13]="Jaqueline";
-				$usernames[14]="Victoria";
-				$usernames[15]="Hanna";
-				$usernames[16]="Sophie";
-				$usernames[17]="Lisa";
-				$usernames[18]="Isabelle";
-				$usernames[19]="Katharina";
-				$usernames[20]="JochensTochter";
+				$usernames[3]="Carlos@ccz.net";
+				$usernames[4]="Dieter@suedsee.com";
+				$usernames[5]="Maxim@or.g";
+				$usernames[6]="Horst@MyMa.il";
+				$usernames[7]="Rüdiger@MyMa.il";
+				$usernames[8]="Jürgen@Arbeitsmail.de";
+				$usernames[9]="Sebastian@nichtArbeitsmail.info";
+				$usernames[10]="Kevin@wasistdas.ups";
+				$usernames[11]="Sabrina@allesmagisch.org";
+				$usernames[12]="Alexandra@buchladen.de";
+				$usernames[13]="Jaqueline@@berlin.info";
+				$usernames[14]="Victoria@plaza.ru";
+				$usernames[15]="Hanna@IchMagZue.ge";
+				$usernames[16]="Sophie@Eis.de";
+				$usernames[17]="Lisa@nochnmailser.ver";
+				$usernames[18]="Isabelle@hatwaszutun.de";
+				$usernames[19]="Katharina@mag.net";
+				$usernames[20]="JochensTochter@malwaskreativ.es";
 				
-				$passwords[0]="8";
+				$passwords[0]=sha1("IBelieveICanFly");
 				$passwords[1]=sha1("SuperHansi92");
 				$passwords[2]=sha1("Ketchup<3");
 				$passwords[3]=sha1("Carlossos71");
