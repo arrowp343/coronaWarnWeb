@@ -18,17 +18,24 @@
         //setze auf codes auf positiv getestet
         $conn->query("UPDATE codes SET posTest = $test WHERE email = (SELECT email FROM codes WHERE id = '$id');");
         
-        //erhöhe warningLevel   (muss noch getestet werden)
+        //erhöhe warningLevel
         $emailResult = $conn->query("SELECT email FROM codes WHERE id = '$id'");
-        foreach($emailResult as $r){
-            $email = str_replace("@", "at", $r['email']);
-        }
-        $email = "`".strtolower($email)."`";
-        echo $email;
-        $contacts = $conn->query("SELECT metId FROM $email;");
+        foreach($emailResult as $r) $email = strtolower(str_replace("@", "at", $r['email']));
+        
+        if($test) $deltaWarningLevel = 1;
+            else $deltaWarningLevel = -1;
+
+        $contacts = $conn->query("SELECT metId FROM `$email`;");
         foreach($contacts as $c){
             $id = $c['metId'];
-            $conn->query("UPDATE login SET warningLevel = warningLevel + 1 WHERE email = (SELECT email FROM codes WHERE id = $id;");
+            
+            $resultEmail = $conn->query("SELECT email FROM codes WHERE id = $id;");
+            foreach($resultEmail as $r) $contactEmail = $r['email'];
+
+            $warningLevelResult = $conn->query("SELECT warningLevel FROM login WHERE email = '$contactEmail'");
+            foreach($warningLevelResult as $r) $warningLevel = $r['warningLevel'];
+            $warningLevel += $deltaWarningLevel;
+            $conn->query("UPDATE login SET warningLevel = $warningLevel WHERE email = '$contactEmail'");
         }
     }
 ?>
