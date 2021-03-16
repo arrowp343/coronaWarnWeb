@@ -13,20 +13,21 @@
     if(isset($_POST['number'])){
         $number = $_POST['number'];
         $date = $_POST['date'];
-        $_sql = "INSERT INTO `$emailAt`(metId, metDate) VALUES ('$number','$date')";
+        $emailAtLowerCase = strtolower($emailAt);
+        $_sql = "INSERT INTO `$emailAtLowerCase`(metId, metDate) VALUES ('$number','$date')";
         $result = $conn->query($_sql);
 
         $delDate = $date;
          for($i=0; $i<14; $i++){
             $delDate++;
-         }
-        $_sql = "SELECT id FROM `codes` where email='$email' AND delDate='$delDate'";
+        }
+        $emailLowerCase = strtolower($email);
+        $_sql = "SELECT id FROM `codes` WHERE eMail='$email' AND delDate = '$delDate'";
         $result = $conn->query($_sql);
 
         $metId = 0;
         foreach($result as $value) {
             $metId = $value["id"];
-
        }
        $_sql = "SELECT email from `codes` WHERE id='$number'";
        $result = $conn->query($_sql);
@@ -34,12 +35,31 @@
        foreach($result as $value) {
            $tabName = $value["email"];
       }
-      $tabName2 = str_replace("@","at", $tabName);
+      $tabName2 = strtolower(str_replace("@","at", $tabName));
       $_sql = "INSERT INTO `$tabName2`(metId, metDate) VALUES ('$metId','$date')";
       $result = $conn->query($_sql);
-    }
 
-    $result = $conn->query("SELECT metId, metDate, posTest FROM `$emailAt` e INNER JOIN codes ON e.metId = codes.id ORDER BY metDate, metId;");
+      $test = 0;
+      $result = $conn->query("SELECT posTest FROM codes WHERE id = $metId");
+      foreach($result as $r) $test = $r['posTest'];
+      if($test == 1){//wenn der eingeloggte positiv
+        $result = $conn->query("SELECT warningLevel FROM login WHERE eMail = '$tabName'");
+        foreach($result as $r) $warningLevel = $r['warningLevel'];
+        $warningLevel++;
+        $conn->query("UPDATE login SET warningLevel = $warningLevel WHERE eMail = '$tabName'");
+      } 
+      
+      $result = $conn->query("SELECT posTest FROM codes WHERE id = $number");
+      foreach($result as $r) $test = $r['posTest'];
+      if($test == 1){//wenn der getroffene positiv
+        $result = $conn->query("SELECT warningLevel FROM login WHERE eMail = '$email'");
+        foreach($result as $r) $warningLevel = $r['warningLevel'];
+        $warningLevel++;
+        $conn->query("UPDATE login SET warningLevel = $warningLevel WHERE eMail = '$email'");
+      }
+    }
+    $sql = "SELECT metId, metDate, posTest FROM `$emailAtLowerCase` e INNER JOIN codes ON e.metId = codes.id ORDER BY metDate, metId;";
+    $result = $conn->query($sql);
     $warningResult = $conn->query("SELECT warningLevel FROM login WHERE email = '$email';");
     foreach($warningResult as $w)
        $warning = $w['warningLevel'];
