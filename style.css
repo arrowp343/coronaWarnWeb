@@ -1,0 +1,43 @@
+body {
+    background-color: darkseagreen;
+}
+
+#loginBoxWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+#loginBox {
+    display: inline-block;
+    border: #eee 1px solid;
+    padding: 2em;
+    margin-top: 10em;
+    background-color: white;
+}
+
+#loginBox input,
+#loginBox button {
+    margin: 0.5em;
+    border: #eee 1px solid;
+    padding: 1em 2em 1em 2em;
+    width: calc(100% - 1em);
+    cursor: pointer;
+}
+
+#loginBox p {
+    margin: 0.5em;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: inline-flex;
+    background-color: white;
+    padding: 2em;
+}
+
+td,
+th {
+    padding: 1em 2em 1em 2em;
+    border: 1px solid black;
+}
