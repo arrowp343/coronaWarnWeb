@@ -41,3 +41,56 @@ th {
     padding: 1em 2em 1em 2em;
     border: 1px solid black;
 }
+
+input[type=number] {
+    font-size: 1.2em;
+    border: 1px solid gainsboro;
+    color: teal;
+    font-family: inherit;
+    font-weight:400;
+    font-family: "Courier New", Courier, monospace;
+    margin-bottom:5px;
+}
+
+input[type=date] {
+    font-size: 1.2em;
+    border: 1px solid gainsboro;
+    color: teal;
+    font-family: inherit;
+    font-weight:400;
+    font-family: "Courier New", Courier, monospace;
+    margin-bottom:5px;
+}
+
+input[type="submit"] {
+    font-size: 1.1em; padding: 5px 12px;
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    color: teal;
+    border: 1px solid silver;
+    background-image: linear-gradient(to top, gainsboro 0%, white 90%);
+    border-radius: 20px;
+    margin-bottom:5px;
+}
+
+input[type="text"] {
+    font-size: 1.1em; padding: 5px 12px;
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    color: teal;
+    border: 1px solid silver;
+    background-image: linear-gradient(to top, gainsboro 0%, white 90%);
+    border-radius: 20px;
+    margin-bottom:5px;
+}
+
+input[type="password"] {
+    font-size: 1.1em; padding: 5px 12px;
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    color: teal;
+    border: 1px solid silver;
+    background-image: linear-gradient(to top, gainsboro 0%, white 90%);
+    border-radius: 20px;
+    margin-bottom:5px;
+}
