@@ -284,7 +284,7 @@ function serverData(){ //Zugriff auf die Datenbank
 				$metid = 0;
 				$z = rand(5,25);
 				$mod2 = $z%5;
-					$a=0;
+				$a=0;
 				for($j = 0; $j < $z; $j++){
 					$mod =rand(0,2);
 					if($a<14){
@@ -310,7 +310,7 @@ function serverData(){ //Zugriff auf die Datenbank
 					$sql = "INSERT INTO `$tabName`(`metId`, `metDate`) VALUES ('$metid','$metDate')";
 					$result=$con->query($sql);
 					$tabName2 = str_replace("@","at",$metMail);
-					$sql = "SELECT id FROM `codes` WHERE eMail='$usernames[$x]' AND delDate='$delDate'";
+					$sql = "SELECT id FROM `codes` WHERE eMail='$usernames[$i]' AND delDate='$delDate'";
 					$result=$con->query($sql);
 					foreach($result as $value)
 						{	

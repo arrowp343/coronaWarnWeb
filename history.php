@@ -9,11 +9,12 @@
     $conn = conFunc();
     $email = $_SESSION['email'];
     $emailAt = str_replace("@","at", $email);
-
+    $emailLowerCase = strtolower($email);
+    $emailAtLowerCase = strtolower($emailAt);
     if(isset($_POST['number'])){
         $number = $_POST['number'];
         $date = $_POST['date'];
-        $emailAtLowerCase = strtolower($emailAt);
+
         $_sql = "INSERT INTO `$emailAtLowerCase`(metId, metDate) VALUES ('$number','$date')";
         $result = $conn->query($_sql);
 
@@ -21,7 +22,7 @@
          for($i=0; $i<14; $i++){
             $delDate++;
         }
-        $emailLowerCase = strtolower($email);
+
         $_sql = "SELECT id FROM `codes` WHERE eMail='$email' AND delDate = '$delDate'";
         $result = $conn->query($_sql);
 
