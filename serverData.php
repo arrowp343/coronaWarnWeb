@@ -230,6 +230,8 @@ function serverData(){ //Zugriff auf die Datenbank
 				$strasse[10]="aufm Hügel";
 				
 				
+				
+				
 				$datum = date('y.m.d');
 			
 			for($i = 0; $i < 21; $i++){
@@ -297,7 +299,7 @@ function serverData(){ //Zugriff auf die Datenbank
 						$delDate++;
 					}
 					$x = rand(1,20);
-					$metMail = str_replace("@","at",$usernames[$x]);
+					$metMail = $usernames[$x];
 					$sql = "SELECT id FROM `codes` WHERE eMail='$metMail' AND delDate='$delDate'";
 					$result=$con->query($sql);
 					foreach($result as $value)
@@ -307,6 +309,16 @@ function serverData(){ //Zugriff auf die Datenbank
 					
 					$sql = "INSERT INTO `$tabName`(`metId`, `metDate`) VALUES ('$metid','$metDate')";
 					$result=$con->query($sql);
+					$tabName2 = str_replace("@","at",$metMail);
+					$sql = "SELECT id FROM `codes` WHERE eMail='$usernames[$x]' AND delDate='$delDate'";
+					$result=$con->query($sql);
+					foreach($result as $value)
+						{	
+							$metid2 = $value["id"];
+						}
+					$sql = "INSERT INTO `$tabName2`(`metId`, `metDate`) VALUES ('$metid2','$metDate')";
+					$result=$con->query($sql);
+					
 				}
 			}
 			
