@@ -268,7 +268,7 @@ function serverData(){ //Zugriff auf die Datenbank
 					{
 						$disInstituiton =$value["id"];
 					}
-					if(!$posTest && $j > 11){
+					if(!$posTest){
 						$sql =  "INSERT INTO `codes`(`eMail`, `delDate`, `posTest`, `disInstitution`) VALUES ('$usernames[$i]', '$delDate','1', '$disInstituiton')";
 					} else{
 						$sql =  "INSERT INTO `codes`(`eMail`, `delDate`) VALUES ('$usernames[$i]', '$delDate')";
@@ -325,7 +325,7 @@ function serverData(){ //Zugriff auf die Datenbank
 			for($i = 0; $i < 21; $i++){
 				$wc=0;
 				$tabName = str_replace("@","at",$usernames[$i]);
-				$sql = "SELECT * FROM $tabName t INNER JOIN codes c ON t.metId = c.id WHERE posTest = 1";
+				$sql = "SELECT * FROM `$tabName` t INNER JOIN codes c ON t.metId = c.id WHERE posTest = 1";
 				$result=$con->query($sql);
 				if($result){
 					foreach($result as $value){
