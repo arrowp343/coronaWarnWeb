@@ -20,6 +20,26 @@
             session_start(['cookie_lifetime' => 3600]);
             $_SESSION['email'] = $email;
             $_SESSION['type'] = 'user';
+
+            $delDate = date("Y-m-d");
+            for($i = 0; $i<14;$i++) $delDate++;
+            $sql = "SELECT * FROM codes WHERE eMail = '$email' AND delDate = '$delDate'";
+            $result = $conn->query($sql);
+            if($result->num_rows == 0){
+                $result2 = $conn->query("SELECT posTest, disInstitution FROM codes WHERE eMail = '$email'");
+                $instiId = 0;
+                $posTest = 0;
+                foreach($result2 as $r2){
+                    if($r2['posTest'] == 1){
+                        $instiId = $r2['disInstitution'];
+                        $posTest = 1;
+                    }
+                }
+                $sql = "INSERT INTO `codes`(`eMail`, `delDate`, `posTest`, `disInstitution`) VALUES ('$email', '$delDate', '$posTest', '$instiId')";
+                $conn->query($sql);
+            }
+            
+
             header('Location: history.php');
             }
             else {
