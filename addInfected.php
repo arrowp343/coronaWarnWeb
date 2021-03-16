@@ -8,23 +8,29 @@
     include 'serverData.php';
     $conn = conFunc();
 
-    if(isset($_POST['action']) && $_POST['action'] == "Speichern"){
-        $email = $_POST['email'];
-        if(isset($_POST['posTest'])) $test = 1;
-        else $test = 0;
-        $testDate = $_POST['testDate'];
+    if(isset($_POST['action']) && $_POST['action'] == "Eintragen"){
+        $id = $_POST['id'];
+        if($_POST['test'] == 'positive')
+            $test = 1;
+        else 
+            $test = 0;
         
-        $result = $conn->query("SELECT * FROM codes WHERE email = '$email' AND delDate = DATE_ADD('$testDate', INTERVAL 14 DAY);");
-        if($result->num_rows == 0){
-            $conn->query("INSERT INTO codes (eMail, delDate, posTest, disInstitution) VALUES ('$email', DATE_ADD('$testDate', INTERVAL 14 DAY), $test, 1 )");
-        } else {
-            $conn->query("UPDATE codes SET posTest = $test WHERE email = '$email' AND delDate = DATE_ADD('$testDate', INTERVAL 14 DAY);");
+        //setze auf codes auf positiv getestet
+        $conn->query("UPDATE codes SET posTest = $test WHERE email = (SELECT email FROM codes WHERE id = '$id');");
+        
+        //erhöhe warningLevel   (muss noch getestet werden)
+        $emailResult = $conn->query("SELECT email FROM codes WHERE id = '$id'");
+        foreach($emailResult as $r){
+            $email = str_replace("@", "at", $r['email']);
         }
-        $conn->query("UPDATE ");
+        $email = "`".strtolower($email)."`";
+        echo $email;
+        $contacts = $conn->query("SELECT metId FROM $email;");
+        foreach($contacts as $c){
+            $id = $c['metId'];
+            $conn->query("UPDATE login SET warningLevel = warningLevel + 1 WHERE email = (SELECT email FROM codes WHERE id = $id;");
+        }
     }
-
-    $result = $conn->query("SELECT eMail FROM codes GROUP BY eMail");
-
 ?>
 
 <html>
@@ -34,39 +40,36 @@
     </head>
     <body>
         <h1>Add Infected</h1>
-        <table>
-            <tr>
-                <th>User</th>
-                <th>Positiv-Getestet</th>
-                <th>Datum des Tests</th>
-                <th>Speichern</th>
-            </tr>
-            <?php
-                foreach($result as $row){
-                    $email = $row['eMail'];
-                    $posTest = false;
-                    $date = "";
-                    $resultCodes = $conn->query("SELECT posTest, DATE_SUB(delDate, INTERVAL 14 DAY) AS testDate FROM codes WHERE eMail = '$email';");
-                    foreach($resultCodes as $rC){
-                        if($rC['posTest'] == true){
-                            $posTest = true;
-                            $date = $rC['testDate'];
-                            break;
-                        }
-                    }
-                    echo "<tr>
-                        <form action=\"addInfected.php\" method=\"POST\">
-                            <td><input type=\"text\" name=\"email\" value=\"$email\"></td>
-                            <td><input type=\"checkbox\" name=\"posTest\"";
-                        if($posTest) echo " checked";
-                        echo "></td>
-                            <td><input type=\"date\" name=\"testDate\" value=\"$date\"></td>
-                            <td><input type=\"submit\" name=\"action\" value=\"Speichern\"></td>
-                        </form>
-                    </tr>";
-                }
-            ?>
-        </table>
+        <form action="addInfected.php" method="POST">
+            <table>
+                <tr>
+                    <td>
+                        Id der Person
+                    </td>
+                    <td>
+                        <div>
+                            <input type="number" name="id" placeholder="Id">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Testergebnis
+                    </td>
+                    <td>
+                        <div>
+                            <input id="radioPositive" type="radio" name="test" value="positive"><label for="radioPositive">Positiv</label>
+                        </div>
+                        <div>
+                            <input id="radioNegative" type="radio" name="test" value="negative"><label for="radioNegative" checked="checked">Negativ</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <input type="submit" name="action" value="Eintragen">
+            </div>
+        </form>
         <form action="addInfected.php" method="POST">
             <input type="submit" name="action" value="Ausloggen">
         </form>
