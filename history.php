@@ -65,7 +65,19 @@
                 }
             ?>
         </table>
-        <p id="warnLevel">Aktuelle Warnstufe: <?php echo $warning; ?></p>
+        <p id="warnLevel">Aktuelle Warnstufe:
+        <?php echo $warning."<br><br>Empfehlung:";
+        if($warning == 0) {
+        echo "<br><br>Sie besitzen derzeit geringes Risiko. Sie haben innerhalb der letzten 14 Tage keinen kontakt mit positiv gemeldeten Personen. <br>Halten Sie stets and die Corona Maßnahmen der Bundesregierung.<br>Siehe unter <a href='https://www.bundesregierung.de/breg-de/themen/coronavirus/corona-diese-regeln-und-einschraenkung-gelten-1734724' target='_blank'>Corona Maßnahmen</a>.";
+         }
+         else if($warning >= 1 && $warning <= 10){
+         echo "<br><br>Sie besitzen derzeit ein hohes Risiko, da Sie innerhalb der letzten 14 Tage kontakt mit ".$warning." positiv gemeldeten Personen.<br>Es ist zu empfehlen, sich testen zu lassen.<br>Siehe unter <a href='https://www.bundesregierung.de/breg-de/themen/coronavirus/corona-diese-regeln-und-einschraenkung-gelten-1734724'target='_blank'>Corona Maßnahmen</a>.";
+         }
+        else if($warning > 10 ){
+        echo "<br><br>Sie besitzen derzeit ein sehr hohes Risiko, da Sie innerhalb der letzten 14 Tage kontakt mit ".$warning." positiv gemeldeten Personen.<br><b> Lassen Sie sich bitte testen!</b><br>Siehe unter <a href='https://www.bundesregierung.de/breg-de/themen/coronavirus/corona-diese-regeln-und-einschraenkung-gelten-1734724' target='_blank'>Corona Maßnahmen</a>.";
+        }
+
+         ?></p>
         <form action="history.php" method="POST">
             <input type="submit" name="action" value="Ausloggen">
         </form>
