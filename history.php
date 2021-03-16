@@ -11,6 +11,16 @@
     $emailAt = str_replace("@","at", $email);
     $emailLowerCase = strtolower($email);
     $emailAtLowerCase = strtolower($emailAt);
+
+     $_sql = "SELECT id FROM `codes` WHERE eMail='$email'";
+     $result = $conn->query($_sql);
+     $myId = 0;
+     foreach($result as $value) {
+                 $myId = $value["id"];
+     }
+
+
+
     if(isset($_POST['number'])){
         $number = $_POST['number'];
         $date = $_POST['date'];
@@ -84,7 +94,8 @@
                 <input type="submit" value="Eintragen">
             </div>
         </form>
-    
+
+    <p><?php echo "Ihre heutige ID lautet: <b>$myId</b>"; ?></p>
         <table>
             <tr>
                 <th>Code der Kontaktperson</th>
