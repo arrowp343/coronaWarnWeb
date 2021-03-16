@@ -7,15 +7,17 @@
         $expect = 0;
 
         $conn = conFunc();
-        $result = $conn->query("SELECT password FROM instimem WHERE eMail = '$email';");
+        $result = $conn->query("SELECT password, institutionID FROM instimem WHERE eMail = '$email';");
         foreach($result as $value){
             $expect = $value['password'];
+            $instiID = $value['institutionID'];
         }
         
         if($expect){
             if(sha1($password) == $expect){
                 session_start(['cookie_lifetime' => 3600]);
                 $_SESSION['email'] = $email;
+                $_SESSION['instiID'] = $instiID;
                 $_SESSION['type'] = 'employee';
                 header('Location: addInfected.php');
             }

@@ -15,9 +15,17 @@
         else 
             $test = 0;
         
+
+
+        $emailResult = $conn->query("SELECT email FROM codes WHERE id = '$id'");
+        foreach($emailResult as $r) $email = $r['email'];
         //setze auf codes auf positiv getestet
-        $conn->query("UPDATE codes SET posTest = $test WHERE email = (SELECT email FROM codes WHERE id = '$id');");
+        $conn->query("UPDATE codes SET posTest = $test WHERE email = '$email';");
         
+        //setze InstiID
+        $instiID = $_SESSION['instiID'];
+        $conn->query("UPDATE codes SET disInstitution = $instiID WHERE email = '$email'");
+
         //erhöhe warningLevel
         $emailResult = $conn->query("SELECT email FROM codes WHERE id = '$id'");
         foreach($emailResult as $r) $email = strtolower(str_replace("@", "at", $r['email']));
